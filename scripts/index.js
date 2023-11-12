@@ -13,9 +13,9 @@ const cardCreate = (cardName, cardImage, cardDelete) => {
 	cardPicture.alt = cardName;
 	cardItem.querySelector('.card__title').textContent = cardName;
 
-	cardList.append(cardItem);
-
 	deleteButton.addEventListener('click', cardDelete);
+
+	return cardItem;
 }
 
 // @todo: Функция удаления карточки
@@ -25,5 +25,5 @@ const cardDelete = (event) => {
 
 // @todo: Вывести карточки на страницу
 initialCards.forEach((cardItem) => {
-	cardCreate(cardItem.name, cardItem.link, cardDelete);
+	cardList.append(cardCreate(cardItem.name, cardItem.link, cardDelete));
 });
