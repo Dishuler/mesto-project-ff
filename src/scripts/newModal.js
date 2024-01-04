@@ -1,6 +1,6 @@
 function closeOnEsc(e) {
 	if (e.which === 27) {
-		closePopup(document.querySelector('.popup_is-opened'), true, true ,600);
+		closePopup(document.querySelector('.popup_is-opened'));
 	}
 }
 
@@ -27,7 +27,7 @@ function openPopup(curentPopup, unlock, timeout, e) {
 	}
 }
 
-function closePopup(curentPopup, doUnlock = true, unlock, timeout) {
+function closePopup(curentPopup, doUnlock = true, unlock = true, timeout = 600) {
 	if(unlock) {
 		curentPopup.classList.remove('popup_is-opened');
 
