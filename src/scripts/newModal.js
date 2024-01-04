@@ -1,6 +1,10 @@
-import { edit } from './card';
+function closeOnEsc(e) {
+	if (e.which === 27) {
+		closePopup(document.querySelector('.popup_is-opened'), true, true ,600);
+	}
+}
 
-function openPopup(curentPopup, unlock, timeout, curentForm, e) {
+function openPopup(curentPopup, unlock, timeout, e) {
 	if(curentPopup && unlock) {
 		if(!curentPopup) {
 			closePopup(curentPopup, false, unlock, timeout);
@@ -10,30 +14,10 @@ function openPopup(curentPopup, unlock, timeout, curentForm, e) {
 			lockBody(unlock, timeout);
 		}
 
-		if(curentPopup.matches('.popup_type_edit')) {
-			edit(curentPopup, unlock, timeout, curentForm);
-		} else if(curentPopup.matches('.popup_type_image')) {
-			const cardLink = e.target.src
-			const cardDescription = e.target.alt;
-
-			const popupImage = curentPopup.querySelector('.popup__image');
-			const popupTitle = curentPopup.querySelector('.popup__caption');
-				
-			popupImage.src = cardLink;
-			popupImage.alt = cardDescription;
-			popupTitle.textContent = cardDescription;
-		}
-
 		function close(e) {
 			if(!e.target.closest('.popup__content')) {
 				closePopup(e.target.closest('.popup'), true, unlock, timeout);
 			} else if((e.target.closest('.popup__close'))) {
-				closePopup(curentPopup, true, unlock, timeout);
-			}
-		}
-
-		function closeOnEsc(e) {
-			if (e.which === 27) {
 				closePopup(curentPopup, true, unlock, timeout);
 			}
 		}
@@ -52,6 +36,7 @@ function closePopup(curentPopup, doUnlock = true, unlock, timeout) {
 		}
 	}
 	curentPopup.removeEventListener('click', close);
+	curentPopup.removeEventListener('click', closeOnEsc);
 }
 
 function lockBody(unlock, timeout) {
@@ -76,7 +61,12 @@ function unlockBody(unlock, timeout) {
 	}, timeout);
 }
 
-export { openPopup, closePopup }
+function editProfile(nameInputs, infoInputs, userName, userInfo) {
+	nameInputs.value = userName.textContent;
+	infoInputs.value = userInfo.textContent;
+}
+
+export { openPopup, closePopup, editProfile }
 
 
 //ещё нужно прикрутить удаление событий при закрытии и добавление при открытии

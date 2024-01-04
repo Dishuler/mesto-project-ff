@@ -1,6 +1,4 @@
-import { closePopup } from "./newModal";
-
-function createCard(name, link, deleteCard) {
+function createCard(name, link, deleteCard, handleClick) {
 	const cardTemplate = document.querySelector('#card-template').content;
 	const cardItem = cardTemplate.querySelector('.card').cloneNode(true);
 	const deleteButton = cardItem.querySelector('.card__delete-button');
@@ -13,6 +11,8 @@ function createCard(name, link, deleteCard) {
 
 	deleteButton.addEventListener('click', deleteCard);
 	cardList.addEventListener('click', likeCard);
+
+	cardImage.addEventListener('click', () => handleClick(cardImage.alt, cardImage.src))
 
 	return cardItem;
 }
@@ -27,23 +27,4 @@ function likeCard(e) {
 	}
 }
 
-function edit(curentPopup, unlock, timeout, editForm) {
-	const nameInputs = editForm.name;
-	const infoInputs = editForm.description;
-
-	const userName = document.querySelector('.profile__title');
-	const userInfo = document.querySelector('.profile__description'); 
-
-	nameInputs.value = userName.textContent;
-	infoInputs.value = userInfo.textContent;
-
-	editForm.addEventListener('submit', (e) => {
-		userName.textContent = nameInputs.value;
-		userInfo.textContent = infoInputs.value;
-
-		closePopup(curentPopup, true, unlock, timeout);
-		e.preventDefault();
-	});
-}
-
-export {createCard, deleteCard, likeCard, edit}
+export {createCard, deleteCard}
