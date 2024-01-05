@@ -35,6 +35,11 @@ const popupPostButtons = document.querySelector('.profile__add-button');
 const popupImageLink = document.querySelector('.popup__image');
 const popupImageTitle = document.querySelector('.popup__caption');
 
+function editProfile(nameInputs, infoInputs, userName, userInfo) {
+	nameInputs.value = userName.textContent;
+	infoInputs.value = userInfo.textContent;
+}
+
 function openPopupImage(name, link) {
 	openPopup(popupImage, unlock, timeout);
 	popupImageLink.src = link;

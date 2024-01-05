@@ -1,13 +1,17 @@
 function close(e) {
-	if (e.which === 27) {
-		console.log(document.querySelector('.popup_is-opened'));
-		closePopup(document.querySelector('.popup_is-opened'));
-	} else if(!e.target.closest('.popup__content')) {
+	if(!e.target.closest('.popup__content')) {
 		console.log(e.target.closest('.popup'));
 		closePopup(e.target.closest('.popup'));
 	} else if((e.target.closest('.popup__close'))) {
 		console.log(e.target.closest('.popup'));
 		closePopup(e.target.closest('.popup'));
+	}
+}
+
+function closeOnEsc(e) {
+	if (e.which === 27) {
+		console.log(document.querySelector('.popup_is-opened'));
+		closePopup(document.querySelector('.popup_is-opened'));
 	}
 }
 
@@ -20,7 +24,7 @@ function openPopup(curentPopup, unlock, timeout, e) {
 			curentPopup.classList.add('popup_is-animated');
 			lockBody(unlock, timeout);
 			curentPopup.addEventListener('click', close);
-			document.addEventListener('keydown', close);
+			document.addEventListener('keydown', closeOnEsc);
 		}
 	}
 }
@@ -34,7 +38,7 @@ function closePopup(curentPopup, doUnlock = true, unlock = true, timeout = 600) 
 		}
 		
 		curentPopup.removeEventListener('click', close);
-		curentPopup.removeEventListener('click', close);
+		curentPopup.removeEventListener('click', closeOnEsc);
 	}
 }
 
@@ -58,11 +62,6 @@ function unlockBody(unlock, timeout) {
 	setTimeout(function () {
 		unlock = true;
 	}, timeout);
-}
-
-function editProfile(nameInputs, infoInputs, userName, userInfo) {
-	nameInputs.value = userName.textContent;
-	infoInputs.value = userInfo.textContent;
 }
 
 export { openPopup, closePopup, editProfile }
