@@ -64,7 +64,7 @@ function unlockBody(unlock, timeout) {
 	}, timeout);
 }
 
-export { openPopup, closePopup, editProfile }
+export { openPopup, closePopup }
 
 
 //ещё нужно прикрутить удаление событий при закрытии и добавление при открытии

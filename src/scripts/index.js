@@ -1,5 +1,5 @@
 import { initialCards } from './cards.js';
-import { openPopup, closePopup, editProfile } from './newModal.js';
+import { openPopup, closePopup } from './newModal.js';
 import { createCard, deleteCard } from './card.js';
 
 //элементы блокировки body
