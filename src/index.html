@@ -37,8 +37,14 @@
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
       <form class="popup__form" name="edit-profile" novalidate>
-        <input type="text" name="name" class="popup__input popup__input_type_name" minlength="2" maxlength="30" placeholder="Имя" required>
-        <input type="text" name="description" class="popup__input popup__input_type_description" placeholder="Занятие" required>
+		  <label class="form__field">
+          <input id="name-input" type="text" name="name" class="popup__input popup__input_type_name" minlength="2" maxlength="30" placeholder="Имя" required>
+		    <span id="name-input-error" class="name-input-error"></span>
+		  </label>
+		  <label class="form__field">
+          <input id="activity-input" type="text" name="description" class="popup__input popup__input_type_description" placeholder="Занятие" required>
+		    <span id="activity-input-error" class="activity-input-error"></span>
+		  </label>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
     </div>
@@ -48,8 +54,14 @@
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Новое место</h3>
       <form class="popup__form" name="new-place" novalidate>
-        <input type="text" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" required>
-        <input type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+			<label class="form__field">
+				<input id="card-name" type="text" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" required>
+				<span id="card-name-error" class="card-name-error"></span>
+			 </label>
+			 <label class="form__field">
+				<input id="card-url" type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+				<span id="card-url-error" class="card-url-error"></span>
+			 </label>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
     </div>

@@ -23,15 +23,25 @@
 
 .popup__input:focus-visible {
 	border: none;
-	border-radius: 1px;
-	outline: 1px solid #000;
-	outline-offset: 4px;
+	outline: none;
 }
 
 .popup__input:invalid {
 	border-bottom: 1px solid red;
 }
- 
+
 .popup__input:valid {
 	border-bottom: 1px solid green;
+}
+
+.form__field {
+	position: relative;
+	display: flex;
+	margin-bottom: 18px;
+}
+
+.form__field span {
+	position: absolute;
+	bottom: -16px;
+	font-size: 12px;
 }
