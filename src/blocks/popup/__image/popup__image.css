@@ -4,3 +4,13 @@
   object-fit: cover;
   display: block;
 }
+
+.profile__image:hover::after {
+  content: "";
+  display: block;
+  background: rgba(0, 0, 0, 0.8) url(../../../images/vector.svg) center
+    no-repeat;
+  cursor: pointer;
+  block-size: 120px;
+  inline-size: 120px;
+}

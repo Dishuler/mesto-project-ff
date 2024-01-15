@@ -1,25 +1,22 @@
 function close(e) {
 	if(!e.target.closest('.popup__content')) {
-		console.log(e.target.closest('.popup'));
 		closePopup(e.target.closest('.popup'));
 	} else if((e.target.closest('.popup__close'))) {
-		console.log(e.target.closest('.popup'));
 		closePopup(e.target.closest('.popup'));
 	}
 }
 
 function closeOnEsc(e) {
 	if (e.which === 27) {
-		console.log(document.querySelector('.popup_is-opened'));
 		closePopup(document.querySelector('.popup_is-opened'));
 	}
 }
 
-function openPopup(curentPopup, unlock, timeout, e) {
+function openPopup(curentPopup, unlock = true, timeout, e) {
 	if(curentPopup && unlock) {
 		if(!curentPopup) {
 			closePopup(curentPopup, false, unlock, timeout);
-		} else {
+		} else{
 			curentPopup.classList.add('popup_is-opened');
 			curentPopup.classList.add('popup_is-animated');
 			lockBody(unlock, timeout);
@@ -36,7 +33,7 @@ function closePopup(curentPopup, doUnlock = true, unlock = true, timeout = 600) 
 		if (doUnlock) {
 			unlockBody(unlock, timeout);
 		}
-		
+
 		curentPopup.removeEventListener('click', close);
 		curentPopup.removeEventListener('click', closeOnEsc);
 	}
