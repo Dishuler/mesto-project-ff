@@ -7,7 +7,7 @@ function close(e) {
 }
 
 function closeOnEsc(e) {
-	if (e.which === 27) {
+	if (e.key === 'Escape') {
 		closePopup(document.querySelector('.popup_is-opened'));
 	}
 }
@@ -35,13 +35,12 @@ function closePopup(curentPopup, doUnlock = true, unlock = true, timeout = 600) 
 		}
 
 		curentPopup.removeEventListener('click', close);
-		curentPopup.removeEventListener('click', closeOnEsc);
+		document.removeEventListener('click', closeOnEsc);
 	}
 }
 
 function lockBody(unlock, timeout) {
-	const body = document.querySelector('body');
-	body.classList.add('lock');
+	document.body.classList.add('lock');
 
 	unlock = false;
 	setTimeout(function () {
@@ -50,9 +49,8 @@ function lockBody(unlock, timeout) {
 }
 
 function unlockBody(unlock, timeout) {
-	const body = document.querySelector('body');
 	setTimeout(function () {
-		body.classList.remove('lock');
+		document.body.classList.remove('lock');
 	}, timeout);
 
 	unlock = false;

@@ -1,5 +1,5 @@
 import { openPopup, closePopup } from './newModal.js';
-import { createCard } from './card.js';
+import { createCard, addLikeCard } from './card.js';
 import { enableValidation, clearValidation } from './validation.js';
 import { getDataUser, getDataCards, changeUserData, addCard, deleteUserCard, changeUserPhoto } from './api.js';
 
@@ -17,7 +17,7 @@ const cardList = document.querySelector('.places__list');
 //Формы
 const editForm = document.forms['edit-profile'];
 const addForm = document.forms['new-place'];
-const errorForm = document.forms['delete-card'];
+const deleteForm = document.forms['delete-card'];
 const popupUserPhotoForm = document.forms['photo-change'];
 
 const nameInputs = editForm.name;
@@ -39,8 +39,8 @@ const popupNewCardButton = popupNewCard.querySelector('.popup__button');
 //Кнопки открытия попапов
 const popupCardDelete = document.querySelector('.popup_delete_card');
 const popupButton = document.querySelector('.popup__button');
-const popupProfileButtons = document.querySelector('.profile__edit-button');
-const popupPostButtons = document.querySelector('.profile__add-button');
+const popupProfileButton = document.querySelector('.profile__edit-button');
+const popupPostButton = document.querySelector('.profile__add-button');
 //popup-ы--------------------------------------------------------------------
 
 const popupImageLink = document.querySelector('.popup__image');
@@ -66,7 +66,7 @@ enableValidation(validationSettings);
 //валидация
 
 
-function editProfile(nameInputs, infoInputs, userName, userInfo) {
+function fillProfileInputs(nameInputs, infoInputs, userName, userInfo) {
 	nameInputs.value = userName.textContent;
 	infoInputs.value = userInfo.textContent;
 }
@@ -88,11 +88,11 @@ popupUserPhotoForm.addEventListener('submit', (e) => {
 		.then((userData) => {
 			userImage.style.backgroundImage = `url(${userData.avatar})`;
 			closePopup(popupUserPhoto);
+			clearValidation(popupUserPhotoForm, validationSettings);
 		})
 		.catch((error) => console.log('Ошибка загрузки данных. Код 3:', error))
 		.finally(() => (popupUserPhotoButton.textContent = buttonStatus));
 
-	clearValidation(popupUserPhotoForm, validationSettings);
 	e.preventDefault();
 });
 
@@ -105,12 +105,12 @@ userImage.addEventListener('click', () => {
 
 
 //Удаление карточки пользователь
-function deleteIOwnCard(cards) {
+function deleteOwnCard(cards) {
 	openPopup(popupCardDelete);
 	popupButton.id = cards._id;
 }
 
-errorForm.addEventListener('submit', (e) => {
+deleteForm.addEventListener('submit', (e) => {
 	const cardId = popupButton.id;
 	deleteUserCard(cardId)
 		.then(() => {
@@ -136,7 +136,7 @@ Promise.all([getDataUser(), getDataCards()])
 		userImage.style.backgroundImage = `url(${userData.avatar})`;
 
 		cardsData.forEach((card) => {
-			cardList.append(createCard(card, openPopupImage, deleteIOwnCard, profileId));
+			cardList.append(createCard(card, openPopupImage, deleteOwnCard, profileId, addLikeCard));
 		})
 	})
 	.catch((error) => console.log('Ошибка загрузки данных. Код 1:', error));
@@ -145,14 +145,14 @@ Promise.all([getDataUser(), getDataCards()])
 
 
 //повесили слушетели на нажатие кнопок
-popupProfileButtons.addEventListener('click', () => {
-	editProfile(nameInputs, infoInputs, userName, userInfo)
-	openPopup(popupEdit, unlock, timeout, editForm);
+popupProfileButton.addEventListener('click', () => {
+	fillProfileInputs(nameInputs, infoInputs, userName, userInfo)
+	openPopup(popupEdit, unlock, timeout);
 	clearValidation(editForm, validationSettings);
 });
 
-popupPostButtons.addEventListener('click', () => {
-	openPopup(popupNewCard, unlock, timeout, addForm);
+popupPostButton.addEventListener('click', () => {
+	openPopup(popupNewCard, unlock, timeout);
 	clearValidation(addForm, validationSettings);
 });
 //повесили слушетели на нажатие кнопок
@@ -163,14 +163,14 @@ addForm.addEventListener('submit', (e) => {
 	popupNewCardButton.textContent = 'Сохранение...';
 	addCard(addForm['place-name'].value, addForm['link'].value)
 	.then((card) => {
-		cardList.prepend(createCard(card, openPopupImage, deleteIOwnCard, profileId));
+		cardList.prepend(createCard(card, openPopupImage, deleteOwnCard, profileId, addLikeCard));
 		closePopup(popupNewCard, true, unlock, timeout);
 		addForm.reset();
+		clearValidation(addForm, validationSettings);
 	})
 	.catch((error) => console.log('Ошибка загрузки данных. Код 3:', error))
 	.finally(() => popupNewCardButton.textContent = buttonStatus)
 
-	clearValidation(addForm, validationSettings);
 	e.preventDefault();
 });
 //повесили слушетели на submit добавления карточки
@@ -184,10 +184,10 @@ editForm.addEventListener('submit', (e) => {
 		userName.textContent = userData.name;
 		userInfo.textContent = userData.about;
 		closePopup(popupEdit, true, unlock, timeout);
+		clearValidation(editForm, validationSettings);
 	})
 	.catch((error) => console.log('Ошибка загрузки данных. Код 2:', error))
 	.finally(() => popupEditButton.textContent = buttonStatus)
 
-	clearValidation(editForm, validationSettings);
 	e.preventDefault();
 });
