@@ -22,9 +22,9 @@ function createCard(card, handleClick, deleteUserCard, profileId, addLikeCardHan
 	
 	
 	if (checkMyLike(card, profileId)) {
-		likeButton.classList.add("card__like-button_is-active");
+		likeButton.classList.add('card__like-button_is-active');
 	} else {
-		likeButton.classList.remove("card__like-button_is-active");
+		likeButton.classList.remove('card__like-button_is-active');
 	}
 
 	if (profileId !== card.owner["_id"]) {
@@ -41,9 +41,7 @@ function createCard(card, handleClick, deleteUserCard, profileId, addLikeCardHan
 }
 
 function checkMyLike(card, profileId) {
-	return card.likes.some((item) => {
-		item._id === profileId;
-	});
+	return card.likes.some((item) => item._id === profileId);
 }
 
 function addLikeCard(card, likeCounter, e) {
@@ -53,7 +51,7 @@ function addLikeCard(card, likeCounter, e) {
 				.then((res) => {
 					likeCounter.textContent = res.likes.length;
 					card.likes = res.likes;
-					e.target.classList.toggle('card__like-button_is-active')
+					e.target.classList.remove('card__like-button_is-active');
 				})
 				.catch((error) => {
 					console.error('Проблемка при снятии лайка', error);
@@ -63,7 +61,7 @@ function addLikeCard(card, likeCounter, e) {
 				.then((res) => {
 					likeCounter.textContent = res.likes.length;
 					card.likes = res.likes;
-					e.target.classList.toggle('card__like-button_is-active');
+					e.target.classList.add('card__like-button_is-active');
 				})
 				.catch((error) => {
 					console.log('Проблемка при лайке', error);
